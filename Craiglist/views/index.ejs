@@ -1,0 +1,10 @@
+<!doctype html>
+<form method="post" action="/entries">
+  <input name="text" required autofocus>
+  <button>Add</button>
+</form>
+<ul>
+  <% for (const e of entries) { %>
+    <li><%= e.text %></li>
+  <% } %>
+</ul>
