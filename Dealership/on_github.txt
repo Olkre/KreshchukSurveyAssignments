@@ -1,0 +1,3 @@
+Feel free to also check the code on GitHub: https://github.com/Olkre/Kreshchuk_DealershipSite.
+
+And the deployed site on: https://olkre.com/Kreshchuk_DealershipSite
