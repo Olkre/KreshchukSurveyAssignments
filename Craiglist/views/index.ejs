@@ -10,17 +10,22 @@
         <ul>
         <% for (const e of categories) { %>
             <li>
-                <a href="categories/<%= e.id %>">
-                    <%= e.name %>
-                </a>
+                <%= e.name %>
             </li>
-            <ol>
-                <% for (const e of categories) { %>
-                    <li>item</li>
+            <ul>
+                <% for (const p of postings) { %>
+                    <% if (p.category_id == e.id) { %>
+                        <a href="posting/<%= e.id %>">
+                            <li><%= p.title %></li>
+                        </a>
+                    <% } %>
                 <% } %>
-            </ol>
+            </ul>
         <% } %>
         </ul>
+
+        postings:
+        <% postings %>
 
 
         <hr>

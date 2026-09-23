@@ -6,11 +6,12 @@ export default function routes(db) {
 
   router.get('/', async (ctx) => {
     const categories = db.prepare('SELECT * FROM categories').all();
-    ctx.body = await ejs.renderFile('views/index.ejs', { categories });
+    const postings = db.prepare('SELECT * FROM posts').all();
+    ctx.body = await ejs.renderFile('views/index.ejs', { categories, postings });
   });
 
   // insert a post
-  router.post('/posts', (ctx) => {
+  router.post('/postings', (ctx) => {
     const { text } = ctx.request.body;
     if (!text) ctx.throw(400, 'text is required');
     const { lastInsertRowid } = db.prepare('INSERT INTO posts (name) VALUES (?)').run(text);
@@ -23,11 +24,11 @@ export default function routes(db) {
     ctx.body = db.prepare('SELECT * FROM categories').all();
   });
 
-  router.get('/posts', (ctx) => {
+  router.get('/postings', (ctx) => {
     ctx.body = db.prepare('SELECT * FROM posts').all();
   });
 
-  router.get('/post/:id', (ctx) => {
+  router.get('/posting/:id', (ctx) => {
     const post = db.prepare('SELECT * FROM posts WHERE id = ?').get(ctx.params.id);
     ctx.body = post;
   });

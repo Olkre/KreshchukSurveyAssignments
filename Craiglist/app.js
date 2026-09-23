@@ -21,6 +21,19 @@ var categories = db.prepare('SELECT * FROM categories').all();
 console.log(categories);
 console.log("count" + categories.length);
 
+// add some initials posts if empty
+var postings = db.prepare('SELECT * FROM posts').all();
+if (postings.length === 0) {
+  db.exec(`INSERT INTO posts (category_id, title, body, createdts)
+    VALUES (1, 'coffee machine', 'nice', CURRENT_TIMESTAMP),
+    (2, 'jeep cherokee', '2014', CURRENT_TIMESTAMP),
+    (3, 'thinking smart and slow', 'some guy', CURRENT_TIMESTAMP)
+    `);
+}
+console.log(postings);
+console.log("count" + postings.length);
+
+
 const router = routes(db);
 
 new Koa()
