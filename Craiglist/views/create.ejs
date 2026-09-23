@@ -11,7 +11,7 @@
         <h2>Make a post</h2>
         <form method="post" action="/create" style="display: flex; flex-direction: column; gap: 10px;">
             <label for="category">Category</label>
-            <select name="category_id">
+            <select name="category_id" id="category_id">
                 <% for (const e of categories) { %>
                     <option value="<%= e.id %>"><%= e.name %></option>
                 <% } %>
