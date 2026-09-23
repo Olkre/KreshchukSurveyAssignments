@@ -1,0 +1,64 @@
+Use the built-in node SQLite connector for data storage.
+
+Users will come to the homepage and see a list of categories driven the database (at least 3) along with some instructions sorted alphabetically.
+
+Clicking on a category will show a list of all the titles for the ads for that category that are unexpired sorted by create dts. There is also a link to create a new entry under this category.
+
+Clicking on title will show the content for that ad, including title, body, and expiration date.
+
+There is no category management functionality. When you set up the database, insert 3 categories, be done.
+
+There is no login. There is no way to delete posts.
+
+
+
+Post expire after 24 hours. You can make them expire after 5 minutes for testing.
+
+
+
+The "create post" should employ minimal validation, meaning the title and body cannot be blank. This should be handled server-side and when an error occurs, the user should be shown the form again with their values filled in.
+
+
+
+Data structures:
+
+
+categories
+
+    id
+
+    name
+
+posts
+
+    id
+
+    category_id
+
+    title
+
+    body
+
+    createdts
+
+
+
+routes:
+
+GET / (shows a list of categories)
+
+GET /posts [expected: category_id] (shows a list of titles)
+
+GET /post  [expected: post_id] (shows a single post)
+
+GET /create [expected: category_id] (the form for adding a new post)
+
+POST /create [expected: all the fields] (saves the post)
+
+
+
+Submit by ZIP archive of your code (do NOT include the node_modules folder), including your database and the SQL necessary to recreate a populated test database.
+
+
+
+Starter application code:

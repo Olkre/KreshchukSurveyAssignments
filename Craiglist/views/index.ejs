@@ -1,10 +1,47 @@
 <!doctype html>
-<form method="post" action="/entries">
-  <input name="text" required autofocus>
-  <button>Add</button>
-</form>
-<ul>
-  <% for (const e of entries) { %>
-    <li><%= e.text %></li>
-  <% } %>
-</ul>
+<html>
+    <head>
+        <title>
+            Craiglist Demo
+        </title>
+    </head>
+    <body>
+        <h1>Categories</h1>
+        <ul>
+        <% for (const e of categories) { %>
+            <li>
+                <a href="categories/<%= e.id %>">
+                    <%= e.name %>
+                </a>
+            </li>
+            <ol>
+                <% for (const e of categories) { %>
+                    <li>item</li>
+                <% } %>
+            </ol>
+        <% } %>
+        </ul>
+
+
+        <hr>
+        <h2>Make a post</h2>
+        <form method="post" action="/posts" style="display: flex; flex-direction: column; gap: 10px;">
+            <label for="category">Category</label>
+            <select>
+                <% for (const e of categories) { %>
+                    <option value="<%= e.id %>"><%= e.name %></option>
+                <% } %>
+            </select>
+
+            <label for="name"title>Title</label>
+            <input placeholder="jeep cherokee 2014" name="title" required autofocus>
+
+            <label for="body">
+                Description
+            </label>
+            <textarea name="body" placeholder="120k miles" required></textarea>
+
+            <button>Add</button>
+        </form>
+    </body>
+</html>
