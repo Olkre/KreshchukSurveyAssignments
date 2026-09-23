@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    <head>
+        <title>
+            Craiglist Demo
+        </title>
+    </head>
+    <body>
+        <h1>Create</h1>
+
+        <h2>Make a post</h2>
+        <form method="post" action="/create" style="display: flex; flex-direction: column; gap: 10px;">
+            <label for="category">Category</label>
+            <select name="category_id">
+                <% for (const e of categories) { %>
+                    <option value="<%= e.id %>"><%= e.name %></option>
+                <% } %>
+            </select>
+
+            <label for="name"title>Title</label>
+            <input placeholder="jeep cherokee 2014" name="title" required autofocus>
+
+            <label for="body">
+                Description
+            </label>
+            <textarea name="body" placeholder="120k miles" required></textarea>
+
+            <button>Add</button>
+        </form>
+    </body>
+</html>

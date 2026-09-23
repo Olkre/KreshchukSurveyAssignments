@@ -10,50 +10,30 @@ There is no category management functionality. When you set up the database, ins
 
 There is no login. There is no way to delete posts.
 
-
-
 Post expire after 24 hours. You can make them expire after 5 minutes for testing.
-
-
 
 The "create post" should employ minimal validation, meaning the title and body cannot be blank. This should be handled server-side and when an error occurs, the user should be shown the form again with their values filled in.
 
-
-
 Data structures:
 
-
 categories
-
     id
-
     name
 
 posts
-
     id
-
     category_id
-
     title
-
     body
-
     createdts
 
 
-
 routes:
-
-GET / (shows a list of categories)
-
-GET /posts [expected: category_id] (shows a list of titles)
-
-GET /post  [expected: post_id] (shows a single post)
-
-GET /create [expected: category_id] (the form for adding a new post)
-
-POST /create [expected: all the fields] (saves the post)
+    GET / (shows a list of categories)
+    GET /posts [expected: category_id] (shows a list of titles)
+    GET /post  [expected: post_id] (shows a single post)
+    GET /create [expected: category_id] (the form for adding a new post)
+    POST /create [expected: all the fields] (saves the post)
 
 
 

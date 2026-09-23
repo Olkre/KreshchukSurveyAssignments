@@ -9,13 +9,15 @@
         <h1>Categories</h1>
         <ul>
         <% for (const e of categories) { %>
-            <li>
-                <%= e.name %>
-            </li>
+            <a href="posts/<%= e.id %>">
+                <li>
+                    <%= e.name %>
+                </li>
+            </a>
             <ul>
                 <% for (const p of postings) { %>
                     <% if (p.category_id == e.id) { %>
-                        <a href="posting/<%= e.id %>">
+                        <a href="post/<%= e.id %>">
                             <li><%= p.title %></li>
                         </a>
                     <% } %>
@@ -24,29 +26,6 @@
         <% } %>
         </ul>
 
-        postings:
-        <% postings %>
-
-
-        <hr>
-        <h2>Make a post</h2>
-        <form method="post" action="/posts" style="display: flex; flex-direction: column; gap: 10px;">
-            <label for="category">Category</label>
-            <select>
-                <% for (const e of categories) { %>
-                    <option value="<%= e.id %>"><%= e.name %></option>
-                <% } %>
-            </select>
-
-            <label for="name"title>Title</label>
-            <input placeholder="jeep cherokee 2014" name="title" required autofocus>
-
-            <label for="body">
-                Description
-            </label>
-            <textarea name="body" placeholder="120k miles" required></textarea>
-
-            <button>Add</button>
-        </form>
+        <a href="/create">Add new post</a>
     </body>
 </html>
