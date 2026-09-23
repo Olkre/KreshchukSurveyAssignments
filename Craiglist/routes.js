@@ -16,6 +16,14 @@ export default function routes(db) {
     const { category_id } = ctx.params;
 
     var posts = db.prepare('SELECT * FROM posts WHERE category_id = ?').all(category_id);
+
+    posts.forEach((post) => {
+      console.log(post.title);
+      console.log(post.createdts);
+    });
+
+
+
     ctx.body = posts;
   });
 
@@ -46,10 +54,10 @@ export default function routes(db) {
     if (!title) ctx.throw(400, 'title is required');
     if (!body) ctx.throw(400, 'body is required');
 
-    //const { lastInsertRowid } = db.prepare('INSERT INTO posts (category_id, title, body, createdts) VALUES (?, ?, ?, CURRENT_TIMESTAMP)').run(title, body);
-    //if (ctx.is('urlencoded')) return ctx.redirect('/');
-    //ctx.status = 201;
-    //ctx.body = { id: Number(lastInsertRowid), text };
+    const { lastInsertRowid } = db.prepare('INSERT INTO posts (category_id, title, body, createdts) VALUES (?, ?, ?, CURRENT_TIMESTAMP)').run(category_id, title, body);
+    if (ctx.is('urlencoded')) return ctx.redirect('/');
+    ctx.status = 201;
+    ctx.body = { id: Number(lastInsertRowid), text };
   });
 
   return router;

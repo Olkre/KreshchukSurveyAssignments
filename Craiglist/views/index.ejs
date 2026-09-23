@@ -18,7 +18,7 @@
                 <% for (const p of postings) { %>
                     <% if (p.category_id == e.id) { %>
                         <a href="post/<%= e.id %>">
-                            <li><%= p.title %></li>
+                            <li><%= p.title %> - <%= p.createdts %></li>
                         </a>
                     <% } %>
                 <% } %>
