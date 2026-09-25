@@ -12,9 +12,10 @@ export default function routes(db) {
   });
 
   // GET /posts [expected: category_id] (shows a list of titles)
-  router.get('/posts/:category_id', (ctx) => {
+  router.get('/posts/:category_id', async (ctx) => {
     const { category_id } = ctx.params;
 
+    var category = db.prepare('SELECT * FROM categories WHERE id = ?').get(category_id);
     var posts = db.prepare('SELECT * FROM posts WHERE category_id = ?').all(category_id);
 
     posts.forEach((post) => {
@@ -22,9 +23,7 @@ export default function routes(db) {
       console.log(post.createdts);
     });
 
-
-
-    ctx.body = posts;
+    ctx.body = await ejs.renderFile('views/posts.ejs', { category, posts });
   });
 
   // GET /post  [expected: post_id] (shows a single post)
