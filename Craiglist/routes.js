@@ -27,11 +27,12 @@ export default function routes(db) {
   });
 
   // GET /post  [expected: post_id] (shows a single post)
-  router.get('/post/:post_id', (ctx) => {
+  router.get('/post/:post_id', async (ctx) => {
     const { post_id } = ctx.params;
 
-    var posts = db.prepare('SELECT * FROM posts WHERE id = ?').all(post_id);
-    ctx.body = posts;
+    var post = db.prepare('SELECT * FROM posts WHERE id = ?').get(post_id);
+    ctx.body = await ejs.renderFile('views/post.ejs', { post });
+
   });
 
   // GET /create [expected: category_id] (the form for adding a new post)

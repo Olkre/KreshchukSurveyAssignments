@@ -1,0 +1,15 @@
+<%- include('partials/header') -%>
+
+<section class="flex flex-col gap-2">
+    <h1>Post</h1>
+    <label class="mt-2">Title</label>
+    <h2><%= post.title %></h2>
+
+    <label class="mt-2">Description</label>
+    <p><%= post.body %></p>
+
+    <label class="mt-2">Posted on</label>
+    <span class="text-xs">Posted on <%= post.createdts %></span>
+</section>
+
+<%- include('partials/footer') -%>
