@@ -14,9 +14,12 @@
             </div>
         </div>
     <% } %>
+    <% if (posts.length === 0) { %>
+        <p>No posts in the category for now</p>
+    <% } %>
     </div>
 
-    <a href="/create?category=<%= category.id %>" class="btn w-fit">Add new post</a>
+    <a href="/create?category_id=<%= category.id %>" class="btn w-fit">Add new post</a>
 </section>
 
 <%- include('partials/footer') -%>

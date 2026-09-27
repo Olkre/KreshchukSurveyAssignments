@@ -6,7 +6,7 @@ import routes from './routes.js';
 // initalize tables for categories and postings
 const db = new DatabaseSync('data.sqlite3');
 db.exec('CREATE TABLE IF NOT EXISTS categories (id INTEGER PRIMARY KEY, name TEXT NOT NULL)');
-db.exec('CREATE TABLE IF NOT EXISTS postings (id INTEGER PRIMARY KEY, category_id INTEGER NOT NULL, title TEXT NOT NULL, body TEXT NOT NULL, createdts DATETIME NOT NULL)');
+db.exec('CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY, category_id INTEGER NOT NULL, title TEXT NOT NULL, body TEXT NOT NULL, createdts DATETIME NOT NULL)');
 
 // add initial data
 var categories = db.prepare('SELECT * FROM categories').all();

@@ -6,7 +6,11 @@
             <label for="category">Category</label>
             <select name="category_id" id="category_id">
                 <% for (const e of categories) { %>
-                    <option value="<%= e.id %>"><%= e.name %></option>
+                    <% if (category_id === e.id) { %>
+                        <option value="<%= e.id %>" selected><%= e.name %></option>
+                    <% } else { %>
+                        <option value="<%= e.id %>"><%= e.name %></option>
+                    <% } %>
                 <% } %>
             </select>
 

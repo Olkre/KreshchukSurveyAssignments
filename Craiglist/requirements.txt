@@ -38,7 +38,3 @@ routes:
 
 
 Submit by ZIP archive of your code (do NOT include the node_modules folder), including your database and the SQL necessary to recreate a populated test database.
-
-
-
-Starter application code:

@@ -1,14 +1,19 @@
 import Router from 'koa-router';
 import ejs from 'ejs';
 
+const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000)
+  .toISOString()
+  .slice(0, 19)
+  .replace('T', ' ');
+
 export default function routes(db) {
   const router = new Router();
 
   // GET / (shows a list of categories)
   router.get('/', async (ctx) => {
     const categories = db.prepare('SELECT * FROM categories').all();
-    const postings = db.prepare('SELECT * FROM posts').all();
-    ctx.body = await ejs.renderFile('views/index.ejs', { categories, postings });
+    const posts = db.prepare('SELECT * FROM posts WHERE createdts >= ?').all(cutoff);
+    ctx.body = await ejs.renderFile('views/index.ejs', { categories, posts });
   });
 
   // GET /posts [expected: category_id] (shows a list of titles)
@@ -16,12 +21,10 @@ export default function routes(db) {
     const { category_id } = ctx.params;
 
     var category = db.prepare('SELECT * FROM categories WHERE id = ?').get(category_id);
-    var posts = db.prepare('SELECT * FROM posts WHERE category_id = ?').all(category_id);
+    var posts = db.prepare(`SELECT * FROM posts
+                            WHERE category_id = ?
+                            AND createdts >= ?`).all(category_id, cutoff);
 
-    posts.forEach((post) => {
-      console.log(post.title);
-      console.log(post.createdts);
-    });
 
     ctx.body = await ejs.renderFile('views/posts.ejs', { category, posts });
   });
@@ -32,21 +35,21 @@ export default function routes(db) {
 
     var post = db.prepare('SELECT * FROM posts WHERE id = ?').get(post_id);
     ctx.body = await ejs.renderFile('views/post.ejs', { post });
-
   });
 
   // GET /create [expected: category_id] (the form for adding a new post)
   router.get('/create', async (ctx) => {
+    // parse as a number for valid comparison later
+    const category_id = Number(ctx.query.category_id);
+
     const categories = db.prepare('SELECT * FROM categories').all();
-    ctx.body = await ejs.renderFile('views/create.ejs', { categories });
+    ctx.body = await ejs.renderFile('views/create.ejs', { category_id, categories });
+
   });
 
   // POST /create [expected: all the fields] (saves the post)
   router.post('/create', (ctx) => {
     const { title, body, category_id } = ctx.request.body;
-    console.log(title);
-    console.log(body);
-    console.log(category_id);
 
     ctx.body = title + " " + body;
 

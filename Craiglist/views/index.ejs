@@ -9,18 +9,23 @@
                     <span>→</span>
                 </a>
                 <div class="flex flex-col gap-1 mt-2">
-                    <% for (const p of postings) { %>
-                        <% if (p.category_id == e.id) { %>
+                    <% for (const p of posts) { %>
+                        <% if (p.category_id === e.id) { %>
                             <a href="/post/<%= e.id %>" class="p-1 px-2 justify-between flex items-center bg-white hover:bg-white/50 rounded-xl hover:no-underline">
                                 <span><%= p.title %></span>
                                 <span class="text-xs"><%= p.createdts %></span>
                             </a>
                         <% } %>
                     <% } %>
+                    <% if (posts.filter(p => p.category_id === e.id).length === 0) { %>
+                        <p>No available posts</p>
+                    <% } %>
                 </div>
             </div>
         <% } %>
         </div>
+
+        <hr class="my-3 text-stone-200">
 
         <a href="/create" class="btn w-fit">Add new post</a>
     </section>
