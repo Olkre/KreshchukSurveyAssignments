@@ -3,6 +3,10 @@
         <h1>Create a posting</h1>
 
         <form method="post" action="/create" class="mt-3 flex flex-col gap-2 bg-stone-100 p-4 rounded-xl">
+            <% if (error) { %>
+                <p class="text-red-500"><%= error %></p>
+            <% } %>
+
             <label for="category">Category</label>
             <select name="category_id" id="category_id">
                 <% for (const e of categories) { %>
@@ -21,12 +25,13 @@
                 pattern=".*\S.*"
                 title="Your input cannot be empty or just spaces."
                 required
-                autofocus>
+                autofocus
+                value="<%= title %>">
 
             <label for="body">
                 Description
             </label>
-            <textarea name="body" placeholder="120k miles" required></textarea>
+            <textarea name="body" placeholder="120k miles" required value="<%= body %>"></textarea>
 
             <button class="btn">Add</button>
         </form>

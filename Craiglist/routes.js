@@ -70,21 +70,28 @@ export default function routes(db) {
     const category_id = Number(ctx.query.category_id);
 
     const categories = db.prepare('SELECT * FROM categories').all();
-    ctx.body = await ejs.renderFile('views/create.ejs', { category_id, categories });
-
+    ctx.body = await ejs.renderFile('views/create.ejs', { category_id, categories, error: null, body: null, title: null });
   });
 
   // POST /create [expected: all the fields] (saves the post)
-  router.post('/create', (ctx) => {
+  router.post('/create', async (ctx) => {
     const { title, body, category_id } = ctx.request.body;
+
+    var error = "";
 
     // check if category exists
     var category = db.prepare('SELECT * FROM categories WHERE id = ?').get(category_id);
-    if (!category) ctx.throw(400, 'selected category does not exist');
-    if (!category_id) ctx.throw(400, 'category is required');
+    if (!category) error += 'The selected category does not exist. ';
+    if (!category_id.trim()) error += 'Category is required. ';
+    if (!title.trim()) error += 'Title is required. ';
+    if (!body.trim()) error += 'Body is required.';
 
-    if (!title) ctx.throw(400, 'title is required');
-    if (!body) ctx.throw(400, 'body is required');
+    if (error) {
+      const categories = db.prepare('SELECT * FROM categories').all();
+      console.log("category_id" + category_id)
+      ctx.body = await ejs.renderFile('views/create.ejs', { category_id, categories, error, title, body });
+      return;
+    }
 
     const { lastInsertRowid } = db.prepare('INSERT INTO posts (category_id, title, body, createdts) VALUES (?, ?, ?, CURRENT_TIMESTAMP)').run(category_id, title, body);
     if (ctx.is('urlencoded')) return ctx.redirect('/');
