@@ -88,8 +88,7 @@ export default function routes(db) {
 
     if (error) {
       const categories = db.prepare('SELECT * FROM categories').all();
-      console.log("category_id" + category_id)
-      ctx.body = await ejs.renderFile('views/create.ejs', { category_id, categories, error, title, body });
+      ctx.body = await ejs.renderFile('views/create.ejs', { category_id: Number(category_id), categories, error, title, body });
       return;
     }
 
