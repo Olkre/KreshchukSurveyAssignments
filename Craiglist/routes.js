@@ -1,18 +1,21 @@
 import Router from 'koa-router';
 import ejs from 'ejs';
 
-const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000)
+// 24 hours
+const cutoffLength = 24 * 60 * 60 * 1000;
+
+// what date is the earliest to show based on the cutoff length
+const cutoffDate = new Date(Date.now() - cutoffLength)
   .toISOString()
-  .slice(0, 19)
-  .replace('T', ' ');
+  .slice(0, 19);
 
 export default function routes(db) {
   const router = new Router();
 
   // GET / (shows a list of categories)
   router.get('/', async (ctx) => {
-    const categories = db.prepare('SELECT * FROM categories').all();
-    const posts = db.prepare('SELECT * FROM posts WHERE createdts >= ?').all(cutoff);
+    const categories = db.prepare('SELECT * FROM categories ORDER BY name').all();
+    const posts = db.prepare('SELECT * FROM posts WHERE createdts >= ? ORDER BY createdts DESC').all(cutoffDate);
     ctx.body = await ejs.renderFile('views/index.ejs', { categories, posts });
   });
 
@@ -23,8 +26,8 @@ export default function routes(db) {
     var category = db.prepare('SELECT * FROM categories WHERE id = ?').get(category_id);
     var posts = db.prepare(`SELECT * FROM posts
                             WHERE category_id = ?
-                            AND createdts >= ?`).all(category_id, cutoff);
-
+                            AND createdts >= ?
+                            ORDER BY createdts DESC`).all(category_id, cutoffDate);
 
     ctx.body = await ejs.renderFile('views/posts.ejs', { category, posts });
   });
@@ -34,6 +37,12 @@ export default function routes(db) {
     const { post_id } = ctx.params;
 
     var post = db.prepare('SELECT * FROM posts WHERE id = ?').get(post_id);
+    post.expirests = new Date (new Date(post.createdts).getTime() + cutoffLength)
+
+    console.log(new Date(post.createdts).getTime())
+    console.log(cutoffLength)
+    console.log(new Date (new Date(post.createdts).getTime() + cutoffLength))
+
     ctx.body = await ejs.renderFile('views/post.ejs', { post });
   });
 
