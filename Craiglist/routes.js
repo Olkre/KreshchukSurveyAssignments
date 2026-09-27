@@ -2,14 +2,13 @@ import Router from 'koa-router';
 import ejs from 'ejs';
 import { m } from 'motion/react';
 
-// 24 hours cutoff
-const cutoffLength = 24 * 60 * 60 * 1000;
+// Cut off length in miliseconds. set to 24 hours
+export const cutoffLength = 24 * 60 * 60 * 1000;
 
-// what date is the earliest to show based on the cutoff length
-function getCutoffDate() {
+// what date is the earliest to show, based on the cutoff length
+export function getCutoffDate() {
   return new Date(Date.now() - cutoffLength)
-    .toISOString()
-    .slice(0, 19);
+    .toISOString();
 }
 
 export default function routes(db) {
@@ -83,8 +82,10 @@ export default function routes(db) {
     var category = db.prepare('SELECT * FROM categories WHERE id = ?').get(category_id);
     if (!category) error += 'The selected category does not exist. ';
     if (!category_id.trim()) error += 'Category is required. ';
-    if (!title.trim()) error += 'Title is required. ';
+
+      if (!title.trim()) error += 'Title is required. ';
     if (!body.trim()) error += 'Body is required.';
+    if (title === "test")error += 'test triggered.';
 
     if (error) {
       const categories = db.prepare('SELECT * FROM categories').all();

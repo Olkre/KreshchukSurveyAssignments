@@ -22,7 +22,6 @@
             <!-- Input requires non empty text -->
             <input placeholder="jeep cherokee 2014"
                 name="title"
-                pattern=".*\S.*"
                 title="Your input cannot be empty or just spaces."
                 required
                 autofocus
@@ -31,7 +30,7 @@
             <label for="body">
                 Description
             </label>
-            <textarea name="body" placeholder="120k miles" required value="<%= body %>"></textarea>
+            <textarea name="body" placeholder="120k miles" required><%= body %></textarea>
 
             <button class="btn">Add</button>
         </form>
