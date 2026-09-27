@@ -15,7 +15,13 @@
             </select>
 
             <label for="name"title>Title</label>
-            <input placeholder="jeep cherokee 2014" name="title" required autofocus>
+            <!-- Input requires non empty text -->
+            <input placeholder="jeep cherokee 2014"
+                name="title"
+                pattern=".*\S.*"
+                title="Your input cannot be empty or just spaces."
+                required
+                autofocus>
 
             <label for="body">
                 Description

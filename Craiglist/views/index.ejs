@@ -5,14 +5,14 @@
         <div class="grid grid-cols-2 gap-2">
         <% for (const e of categories) { %>
             <div class="pt-2 p-3 rounded-2xl bg-stone-100 hover:bg-blue-100">
-                <a href="posts/<%= e.id %>" class="justify-between flex font-medium">
+                <a href="/posts?category_id=<%= e.id %>" class="justify-between flex font-medium">
                     <%= e.name %>
                     <span>→</span>
                 </a>
                 <div class="flex flex-col gap-1 mt-2">
                     <% for (const p of posts) { %>
                         <% if (p.category_id === e.id) { %>
-                            <a href="/post/<%= e.id %>" class="p-1 px-2 justify-between flex items-center bg-white hover:bg-white/50 rounded-xl hover:no-underline">
+                            <a href="/post?post_id=<%= p.id %>" class="p-1 px-2 justify-between flex items-center bg-white hover:bg-white/50 rounded-xl hover:no-underline">
                                 <span><%= p.title %></span>
                                 <span class="text-xs"><%= p.createdts %></span>
                             </a>
