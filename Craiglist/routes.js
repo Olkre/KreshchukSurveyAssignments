@@ -7,8 +7,8 @@ export const cutoffLength = 24 * 60 * 60 * 1000;
 
 // what date is the earliest to show, based on the cutoff length
 export function getCutoffDate() {
-  return new Date(Date.now() - cutoffLength)
-    .toISOString();
+  // prepare date so that sqlite3 would accept and process it correctly
+  return new Date(Date.now() - cutoffLength).toISOString().replace('T', ' ');
 }
 
 export default function routes(db) {
@@ -83,9 +83,8 @@ export default function routes(db) {
     if (!category) error += 'The selected category does not exist. ';
     if (!category_id.trim()) error += 'Category is required. ';
 
-      if (!title.trim()) error += 'Title is required. ';
+    if (!title.trim()) error += 'Title is required. ';
     if (!body.trim()) error += 'Body is required.';
-    if (title === "test")error += 'test triggered.';
 
     if (error) {
       const categories = db.prepare('SELECT * FROM categories').all();

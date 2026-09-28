@@ -7,7 +7,7 @@
                 <p class="text-red-500"><%= error %></p>
             <% } %>
 
-            <label for="category">Category</label>
+            <label for="category_id">Category</label>
             <select name="category_id" id="category_id">
                 <% for (const e of categories) { %>
                     <% if (category_id === e.id) { %>
@@ -18,9 +18,10 @@
                 <% } %>
             </select>
 
-            <label for="name"title>Title</label>
+            <label for="title">Title</label>
             <!-- Input requires non empty text -->
-            <input placeholder="jeep cherokee 2014"
+            <input id="title"
+                placeholder="jeep cherokee 2014"
                 name="title"
                 title="Your input cannot be empty or just spaces."
                 required
@@ -30,7 +31,7 @@
             <label for="body">
                 Description
             </label>
-            <textarea name="body" placeholder="120k miles" required><%= body %></textarea>
+            <textarea id="body" name="body" placeholder="120k miles" required><%= body %></textarea>
 
             <button class="btn">Add</button>
         </form>
