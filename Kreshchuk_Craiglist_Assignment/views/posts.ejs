@@ -1,0 +1,29 @@
+<%- include('partials/header') -%>
+
+<% if(category) { %>
+<section class="flex flex-col gap-3">
+    <h1>Posts in <%= category.name %> category</h1>
+    <div class="grid grid-cols-2 gap-2">
+    <% for (const e of posts) { %>
+        <div class="pt-2 p-3 rounded-2xl bg-stone-100 hover:bg-blue-100">
+            <a href="/post?post_id=<%= e.id %>" class="justify-between flex font-medium">
+                <%= e.title %>
+                <span>→</span>
+            </a>
+            <div class="flex flex-col gap-1 mt-2">
+                <span class="text-xs">Posted on <%= e.createdts %></span>
+            </div>
+        </div>
+    <% } %>
+    <% if (posts.length === 0) { %>
+        <p>No posts in the category for now</p>
+    <% } %>
+    </div>
+
+    <a href="/create?category_id=<%= category.id %>" class="btn w-fit">Add new post</a>
+</section>
+<% } else { %>
+    <p>The category wasn't found</p>
+<% } %>
+
+<%- include('partials/footer') -%>

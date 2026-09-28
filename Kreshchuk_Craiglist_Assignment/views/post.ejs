@@ -1,0 +1,25 @@
+<%- include('partials/header') -%>
+
+<section class="flex flex-col gap-2">
+    <h1>Post</h1>
+    <% if (post) { %>
+    <label class="mt-2">Title</label>
+    <h2><%= post.title %></h2>
+
+    <label class="mt-2">Description</label>
+    <p><%= post.body %></p>
+
+    <label class="mt-2">Posted on</label>
+    <span class="">Posted on <%= post.createdts %></span>
+
+    <label class="mt-2">Expires on</label>
+    <span class="">Expires on <%= post.expirests %></span>
+    <% } else { %>
+        <p>Post is not available.</p>
+        <% if (message) { %>
+            <p class="text-stone-500"><%= message %></p>
+        <% } %>
+    <% } %>
+</section>
+
+<%- include('partials/footer') -%>
