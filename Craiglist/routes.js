@@ -1,6 +1,5 @@
 import Router from 'koa-router';
 import ejs from 'ejs';
-import { m } from 'motion/react';
 
 // Cut off length in miliseconds. set to 24 hours
 export const cutoffLength = 24 * 60 * 60 * 1000;
